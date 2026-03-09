@@ -41,9 +41,9 @@
         <div class="flex justify-between items-center max-w-4xl mx-auto">
             <div>
                 <h1 class="text-2xl font-bold tracking-wide italic">The Aussie Odyssey 🇦🇺</h1>
-                <p class="text-white/80 text-sm font-medium">Cairns to Melbourne Road Trip</p>
+                <p class="text-white/80 text-sm font-medium">60 Day Master Plan</p>
             </div>
-            <div class="text-3xl">🦘</div>
+            <div class="text-3xl">⛵</div>
         </div>
         <div class="flex gap-3 mt-4 overflow-x-auto hide-scrollbar max-w-4xl mx-auto pb-1">
             <button onclick="scrollToMonth('feb')" class="bg-white/20 hover:bg-white/30 px-4 py-1.5 rounded-full text-sm font-bold whitespace-nowrap transition">Feb '26</button>
@@ -53,15 +53,24 @@
     </header>
 
     <main class="max-w-4xl mx-auto p-4 space-y-8">
-        <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-ocean-blue">
-            <h3 class="text-ocean-blue font-bold text-xs uppercase italic">The BNE Car Swap</h3>
-            <p class="text-sm font-bold mt-1">Tuesday March 03</p>
-            <p class="text-xs text-gray-500 italic">Dropping Car #1 at BNE Airport, picking up Car #2 & driving south!</p>
+        <!-- Status Hub -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-ocean-blue">
+                <h3 class="text-ocean-blue font-bold text-xs uppercase italic">Current Status</h3>
+                <p class="text-sm font-bold mt-1">Yamba, NSW</p>
+                <p class="text-xs text-gray-500">Boat Trip Tomorrow!</p>
+            </div>
+            <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-market-pink">
+                <h3 class="text-market-pink font-bold text-xs uppercase italic">Upcoming</h3>
+                <p class="text-sm font-bold mt-1">Sydney Market Blitz</p>
+                <p class="text-xs text-gray-500">Mar 14: Glebe | Mar 15: Bondi</p>
+            </div>
         </div>
 
         <div id="calendar-container"></div>
     </main>
 
+    <!-- Detail View Modal -->
     <div id="detail-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none" onclick="closeModal(event)">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden transform transition-all scale-95 duration-300" id="modal-content">
             <div id="modal-header" class="h-32 relative flex items-end p-6">
@@ -76,17 +85,17 @@
                 <div class="flex items-start gap-4">
                     <div id="modal-icon" class="text-4xl bg-slate-100 p-3 rounded-2xl"></div>
                     <div>
-                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider italic">The Journey</p>
+                        <p class="text-xs text-slate-400 font-bold uppercase tracking-wider italic">Journey Phase</p>
                         <p id="modal-leg-goal" class="text-slate-600 text-sm leading-relaxed"></p>
                     </div>
                 </div>
                 <hr class="border-slate-100">
                 <div>
-                    <h3 class="font-bold text-slate-800 mb-2 text-sm italic">Daily Activities:</h3>
+                    <h3 class="font-bold text-slate-800 mb-2 text-sm italic">The Schedule:</h3>
                     <ul id="modal-activities" class="space-y-2 text-sm text-slate-600"></ul>
                 </div>
                 <div class="bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    <p class="text-xs text-slate-400 font-bold uppercase">Sleep Spot</p>
+                    <p class="text-xs text-slate-400 font-bold uppercase">Overnight Stay</p>
                     <p id="modal-stay" class="text-slate-700 font-medium"></p>
                 </div>
             </div>
@@ -96,12 +105,12 @@
     <script>
         const itinerary = {
             "2026-02-08": { title: "Arrive Cairns", icon: "🛬", activities: ["Arrive Cairns", "Pick up Car #1"], stay: "Cairns", leg: "Tropical North", color: "bg-tropical-green" },
-            "2026-02-09": { title: "Rainforest Day", icon: "🐊", activities: ["Daintree Rainforest", "Cape Tribulation", "Fishing"], stay: "Cairns", leg: "Tropical North", color: "bg-tropical-green" },
+            "2026-02-09": { title: "Rainforest Day", icon: "🐊", activities: ["Daintree Rainforest", "Cape Tribulation"], stay: "Cairns", leg: "Tropical North", color: "bg-tropical-green" },
             "2026-02-10": { title: "Waterfalls", icon: "💦", activities: ["Fairy Falls & Josephine Falls", "Evening: Drive to Port Douglas"], stay: "Port Douglas", leg: "Tropical North", color: "bg-tropical-green" },
-            "2026-02-11": { title: "Great Barrier Reef", icon: "🐠", activities: ["8:00 AM Departure", "Full Day Reef Tour", "4:00 PM: End Tour", "Push to Townsville (4.5h)"], stay: "Townsville", leg: "Tropical North", color: "bg-tropical-green" },
+            "2026-02-11": { title: "Great Barrier Reef", icon: "🐠", activities: ["8:00 AM Departure", "Full Day Reef Tour", "Night Drive to Townsville"], stay: "Townsville", leg: "Tropical North", color: "bg-tropical-green" },
             "2026-02-12": { title: "To Airlie Beach", icon: "🛣️", activities: ["Morning drive to Airlie (3.5h)", "Check-in & Lagoon"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
-            "2026-02-13": { title: "Airlie Chill", icon: "🏖️", activities: ["Zero driving day", "Relax in Airlie"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
-            "2026-02-14": { title: "Valentine's Day", icon: "❤️", activities: ["Whitsunday Scenic Flight", "Dinner @ The Belvedere"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
+            "2026-02-13": { title: "Airlie Chill", icon: "🏖️", activities: ["Relax by the lagoon"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
+            "2026-02-14": { title: "Valentine's Day", icon: "❤️", activities: ["Morning: Scenic Flight", "Dinner @ The Belvedere"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
             "2026-02-15": { title: "Whitehaven Beach", icon: "🚤", activities: ["Ocean Rafting tour"], stay: "Airlie Beach", leg: "Tropical North", color: "bg-tropical-green" },
             "2026-02-16": { title: "Rockhampton", icon: "🚗", activities: ["Drive Airlie to Rockhampton"], stay: "Rockhampton", leg: "Coastal Push", color: "bg-tropical-green" },
             "2026-02-17": { title: "Hervey Bay", icon: "📍", activities: ["Drive to Hervey Bay"], stay: "Hervey Bay", leg: "Coastal Push", color: "bg-tropical-green" },
@@ -109,45 +118,48 @@
             "2026-02-19": { title: "K'gari Beach Day", icon: "🏝️", activities: ["75 Mile Beach", "Maheno Shipwreck", "Eli Creek"], stay: "Hervey Bay", leg: "K'gari Adventure", color: "bg-sand-beige" },
             "2026-02-20": { title: "Noosa Heads", icon: "🌊", activities: ["Drive to Noosa (2.5h)"], stay: "Noosa", leg: "Sunshine Loop", color: "bg-orange-300" },
             "2026-02-21": { title: "Noosa River", icon: "🎣", activities: ["Hire a boat & Fish"], stay: "Noosa", leg: "Sunshine Loop", color: "bg-orange-300" },
-            "2026-02-22": { title: "Noosa Surf Lesson", icon: "🏄", activities: ["Morning: Surf Lesson", "National Park Walk"], stay: "Noosa", leg: "Sunshine Loop", color: "bg-orange-300" },
+            "2026-02-22": { title: "Noosa Surf Lesson", icon: "🏄", activities: ["Morning: Surf Lesson", "Afternoon: National Park Walk"], stay: "Noosa", leg: "Sunshine Loop", color: "bg-orange-300" },
             "2026-02-23": { title: "Australia Zoo", icon: "🐊", activities: ["Drive to Brisbane via Zoo"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
             "2026-02-24": { title: "Brisbane City", icon: "🛍️", activities: ["Queen St Mall Shopping", "Southbank"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
             "2026-02-25": { title: "Brisbane Explore", icon: "🚶", activities: ["Howard Smith Wharves", "Relax"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
-            "2026-02-26": { title: "Koala Sanctuary", icon: "🐨", activities: ["Lone Pine visit"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
-            "2026-02-27": { title: "Scooby-Doo Island", icon: "🐬", activities: ["Tangalooma Day Cruise", "Snorkel Wrecks", "Dolphin Feeding"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
+            "2026-02-26": { title: "Koala Sanctuary", icon: "🐨", activities: ["Lone Pine Sanctuary visit"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
+            "2026-02-27": { title: "Tangalooma", icon: "🐬", activities: ["Scooby-Doo Tangalooma Trip", "Snorkel Wrecks", "Dolphin Feeding"], stay: "Brisbane", leg: "Sunshine Loop", color: "bg-orange-300" },
             "2026-02-28": { title: "Movie World", icon: "🎢", activities: ["Movie World Gold Coast", "Wet'n'Wild"], stay: "Surfers Paradise", leg: "Sunshine Loop", color: "bg-orange-300" },
-            "2026-03-01": { title: "U-Turn North", icon: "↩️", activities: ["Drive to Bundaberg (5h)"], stay: "Bundaberg", leg: "Turtle Detour", color: "bg-emerald-400" },
+            "2026-03-01": { title: "U-Turn North", icon: "↩️", activities: ["Drive North to Bundaberg"], stay: "Bundaberg", leg: "Turtle Detour", color: "bg-emerald-400" },
             "2026-03-02": { title: "Turtle Encounter", icon: "🐢", activities: ["Mon Repos Turtles (6PM)"], stay: "Bundaberg", leg: "Turtle Detour", color: "bg-emerald-400" },
-            "2026-03-03": { title: "BNE Car Swap", icon: "🔄", activities: ["Drive to BNE Airport", "Swap Car #1 for Car #2", "Continue Drive to Byron Bay"], stay: "Byron Bay", leg: "The Big Swap", color: "bg-ocean-blue" },
-            "2026-03-04": { title: "Byron Surf", icon: "🏄", activities: ["Surf Lesson at 'The Pass'"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
-            "2026-03-05": { title: "Nimbin Trip", icon: "☮️", activities: ["Day trip to Nimbin", "Minyon Falls"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
-            "2026-03-06": { title: "Byron Sunrise", icon: "🌅", activities: ["Lighthouse Walk", "Dolphin Kayaking"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
-            "2026-03-07": { title: "Yamba Fishing", icon: "🎣", activities: ["Drive to Yamba (1.5h)", "Fishing on Clarence River"], stay: "Yamba", leg: "Pacific Coast", color: "bg-ocean-blue" },
-            "2026-03-08": { title: "Sydney Arrival", icon: "🌉", activities: ["Drive Yamba to Sydney (7h)", "Stop at Port Macquarie Koala Hospital"], stay: "Sydney", leg: "Pacific Coast", color: "bg-ocean-blue" },
-            "2026-03-09": { title: "Sydney Start", icon: "🏙️", activities: ["Circular Quay", "Opera House", "The Rocks"], stay: "Sydney", leg: "Sydney City", color: "bg-ocean-blue" },
-            "2026-03-10": { title: "Manly Ferry", icon: "⛴️", activities: ["Ferry to Manly", "Beach Walk"], stay: "Sydney", leg: "Sydney City", color: "bg-ocean-blue" },
-            "2026-03-11": { title: "Bondi Walk", icon: "🏖️", activities: ["Bondi to Coogee Coastal Walk"], stay: "Sydney", leg: "Sydney City", color: "bg-ocean-blue" },
-            "2026-03-12": { title: "Bridge Climb", icon: "🧗", activities: ["Sydney Harbour Bridge Climb"], stay: "Sydney", leg: "Sydney City", color: "bg-ocean-blue" },
-            "2026-03-13": { title: "Blue Mountains", icon: "⛰️", activities: ["Train to Katoomba", "Three Sisters"], stay: "Sydney", leg: "Sydney City", color: "bg-ocean-blue" },
-            "2026-03-14": { title: "Glebe Markets", icon: "👕", activities: ["Glebe Markets (Saturday)", "Thrift shopping", "Street food"], stay: "Sydney", leg: "Thrift & Markets", color: "bg-market-pink" },
-            "2026-03-15": { title: "Thrift Society", icon: "🛍️", activities: ["Fashion Thrift Society", "Second Life Markets"], stay: "Sydney", leg: "Thrift & Markets", color: "bg-market-pink" },
-            "2026-03-16": { title: "Newtown Thrift", icon: "🎸", activities: ["King Street Newtown", "Vintage Marathon"], stay: "Sydney", leg: "Thrift & Markets", color: "bg-market-pink" },
-            "2026-03-17": { title: "Jervis Bay", icon: "🚗", activities: ["Drive South to Jervis Bay"], stay: "Jervis Bay", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-18": { title: "Hyams Beach", icon: "🏖️", activities: ["Whitest sand in the world"], stay: "Jervis Bay", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-19": { title: "Kangaroos", icon: "🦘", activities: ["Drive to Batemans Bay", "Pebbly Beach"], stay: "Batemans Bay", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-20": { title: "Penguin Parade", icon: "🐧", activities: ["Phillip Island Penguins at Sunset"], stay: "Phillip Island", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-21": { title: "Melbourne CBD", icon: "☕", activities: ["Drive to Melbourne", "Laneway Coffee"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-22": { title: "12 Apostles", icon: "🗿", activities: ["Great Ocean Road Day Trip"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-23": { title: "St Kilda", icon: "🎡", activities: ["Pier & Luna Park"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
-            "2026-03-24": { title: "Last Stop", icon: "🎨", activities: ["Melbourne Shopping & Laneways"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" }
+            "2026-03-03": { title: "BNE Car Swap", icon: "🔄", activities: ["Drive to BNE Airport", "Swap Car #1 for Car #2", "Check into Brisbane city"], stay: "Brisbane", leg: "The Big Swap", color: "bg-ocean-blue" },
+            "2026-03-04": { title: "Gold Coast", icon: "🏙️", activities: ["Drive to Surfers Paradise", "Beach Day"], stay: "Surfers Paradise", leg: "Sunshine Loop", color: "bg-orange-300" },
+            "2026-03-05": { title: "Surfers Relax", icon: "🌊", activities: ["Relax in Surfers Paradise"], stay: "Surfers Paradise", leg: "Sunshine Loop", color: "bg-orange-300" },
+            "2026-03-06": { title: "Byron Bay", icon: "🏄", activities: ["Drive to Byron Bay", "Check-in"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
+            "2026-03-07": { title: "Byron Surf", icon: "🤙", activities: ["Surf Session at 'The Pass'"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
+            "2026-03-08": { title: "Nimbin Trip", icon: "☮️", activities: ["Day trip to Nimbin", "Minyon Falls"], stay: "Byron Bay", leg: "Pacific Coast", color: "bg-ocean-blue" },
+            "2026-03-09": { title: "To Yamba", icon: "🚗", activities: ["Left Byron Bay", "Arrive in Yamba"], stay: "Yamba", leg: "Pacific Coast", color: "bg-ocean-blue" },
+            "2026-03-10": { title: "Yamba Boat Trip", icon: "⛵", activities: ["Morning Boat Trip", "Night: Drive to Port Macquarie"], stay: "Port Macquarie", leg: "Pacific Coast", color: "bg-ocean-blue" },
+            "2026-03-11": { title: "Manly Arrival", icon: "⛴️", activities: ["Arrive in Manly", "Beach walk", "Pub dinner"], stay: "Manly", leg: "Sydney & Markets", color: "bg-market-pink" },
+            "2026-03-12": { title: "Sydney Center", icon: "🌉", activities: ["Arrive in Sydney Center", "Harbour Bridge Climb", "Explore CBD"], stay: "Sydney Center", leg: "Sydney & Markets", color: "bg-market-pink" },
+            "2026-03-13": { title: "Blue Mountains", icon: "⛰️", activities: ["Blue Mountains Day Trip", "Check-in near Glebe"], stay: "Glebe", leg: "Sydney & Markets", color: "bg-market-pink" },
+            "2026-03-14": { title: "Glebe Markets", icon: "👕", activities: ["Glebe Markets (Saturday)", "Thrift shopping", "Evening: Move to Bondi"], stay: "Bondi", leg: "Sydney & Markets", color: "bg-market-pink" },
+            "2026-03-15": { title: "Bondi Day", icon: "🏖️", activities: ["Bondi Markets (Sunday)", "Bondi to Coogee Walk", "Drive to Jervis Bay"], stay: "Jervis Bay", leg: "Sydney & Markets", color: "bg-market-pink" },
+            "2026-03-16": { title: "Hyams Beach", icon: "🏝️", activities: ["Whitest sand in the world", "Relaxing"], stay: "Jervis Bay", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-17": { title: "Kangaroos", icon: "🦘", activities: ["Drive to Batemans Bay", "Pebbly Beach (Kangaroos)"], stay: "Batemans Bay", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-18": { title: "Into Victoria", icon: "🦭", activities: ["Stop at Narooma (Seals)", "Drive to Lakes Entrance"], stay: "Lakes Entrance", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-19": { title: "Fishing Capital", icon: "🦀", activities: ["Full day fishing & crabbing"], stay: "Lakes Entrance", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-20": { title: "Wilsons Prom", icon: "🌳", activities: ["Drive to Tidal River"], stay: "Tidal River", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-21": { title: "Hiking", icon: "🥾", activities: ["Mt Oberon Summit Hike", "Squeaky Beach"], stay: "Tidal River", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-22": { title: "Penguins", icon: "🐧", activities: ["Drive to Phillip Island", "Penguin Parade (Sunset)"], stay: "Phillip Island", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-23": { title: "Melbourne Arrival", icon: "☕", activities: ["Drive to Melbourne", "Laneway exploration"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-24": { title: "12 Apostles", icon: "🗿", activities: ["Great Ocean Road Day Trip"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-25": { title: "St Kilda", icon: "🎡", activities: ["St Kilda Pier", "Luna Park"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" },
+            "2026-03-26": { title: "City Culture", icon: "🎨", activities: ["Shopping & Laneways"], stay: "Melbourne", leg: "Wild South", color: "bg-twilight-purple" }
         };
 
-        for (let d = 25; d <= 31; d++) {
-            itinerary[`2026-03-${d}`] = { title: "Buffer Time", icon: "🕰️", activities: ["Relax & Revisit favorites"], stay: "Flexible", leg: "The Buffer", color: "bg-gray-200" };
+        // Fill remaining buffer
+        for (let d = 27; d <= 31; d++) {
+            itinerary[`2026-03-${d}`] = { title: "Flex Time", icon: "🕰️", activities: ["Relax & Revisit favorites"], stay: "Flexible", leg: "The Buffer", color: "bg-gray-200" };
         }
         for (let d = 1; d <= 8; d++) {
             let dayStr = d < 10 ? `0${d}` : d;
-            itinerary[`2026-04-${dayStr}`] = { title: d === 8 ? "Fly Home" : "Buffer Time", icon: d === 8 ? "✈️" : "🕰️", activities: d === 8 ? ["Drop Car #2", "Fly Home"] : ["Relax"], stay: d === 8 ? "Home" : "Flexible", leg: "The Buffer", color: "bg-gray-200" };
+            itinerary[`2026-04-${dayStr}`] = { title: d === 8 ? "Fly Home" : "Flex Time", icon: d === 8 ? "✈️" : "🕰️", activities: d === 8 ? ["Drop Car #2", "Fly Home"] : ["Relax"], stay: d === 8 ? "Home" : "Flexible", leg: "The Buffer", color: "bg-gray-200" };
         }
 
         function renderCalendar() {
